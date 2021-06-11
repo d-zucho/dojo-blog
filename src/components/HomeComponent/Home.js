@@ -5,10 +5,9 @@ import './home.style.css'
 const Home = () => {
   // hook -- useState hook
   // >> gives us a way to make a reactive value and provides us a way to change that value whenever we want
-  /**
-  const [name, setName] = useState('mario')
-  const [age, setAge] = useState(25)
-  */
+
+  // const [name, setName] = useState('mario')
+  // const [age, setAge] = useState(25)
   // const handleClick = () => {
   //   if (name === 'mario') {
   //     setName('luigi')
@@ -34,6 +33,10 @@ const Home = () => {
     <div className="home">
       <div>
         <BlogList blogs={blogs} title="All Blogs" />
+        <BlogList
+          blogs={blogs.filter((blog) => blog.author === 'mario')}
+          title="Mario's Blogs"
+        />
       </div>
     </div>
   )
