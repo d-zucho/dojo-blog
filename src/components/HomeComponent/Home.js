@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import BlogList from '../blogListComponent/BlogList'
 import './home.style.css'
 
@@ -18,27 +18,26 @@ const Home = () => {
   //   }
   // }
 
-  const [blogs, setBlogs] = useState([
-    { title: 'My new website', body: 'lorem ipsum...', author: 'mario', id: 1 },
-    { title: 'Welcome party!', body: 'lorem ipsum...', author: 'yoshi', id: 2 },
-    {
-      title: 'Web dev top tips',
-      body: 'lorem ipsum...',
-      author: 'mario',
-      id: 3,
-    },
-  ])
+  /**
+   * react hook to make the blogs object 'reactionable' and alterable by setting this data to the state.
+   * - useState also always comes with a second parameter that changes/updates this value
+   */
+  const [blogs, setBlogs] = useState(null)
 
-  const handleDelete = (id) => {
-    const newBlogs = blogs.filter((blog) => blog.id !== id)
-    setBlogs(newBlogs)
-  }
+  useEffect(() => {
+    fetch('http://localhost:8000/blogs')
+      .then((response) => {
+        return response.json()
+      })
+      .then((data) => {
+        console.log(data[0].title)
+        setBlogs(data) // this does not create an infinite loop because of setting the dependency parameter of useEffect to '[]'
+      })
+  }, [])
 
   return (
     <div className="home">
-      <div>
-        <BlogList blogs={blogs} title="All Blogs" handleDelete={handleDelete} />
-      </div>
+      <div>{blogs && <BlogList blogs={blogs} title="All Blogs" />}</div>
     </div>
   )
 }
