@@ -3,7 +3,11 @@ import BlogList from '../blogListComponent/BlogList'
 import './home.style.css'
 
 const Home = () => {
-  const { data: blogs, isPending, error } = useFetch('http://localhost:8000')
+  const {
+    data: blogs,
+    isPending,
+    error,
+  } = useFetch('http://localhost:8000/blogs')
   // The 'data:blogs' in the destructuring just means to use the 'data' object but call it 'blogs'
 
   return (
